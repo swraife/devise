@@ -238,7 +238,7 @@ module ActionDispatch::Routing
       options[:options][:format] = false if options[:format] == false
 
       resources.map!(&:to_sym)
-
+      puts "Resources list: #{resources}"
       resources.each do |resource|
         mapping = Devise.add_mapping(resource, options)
 
@@ -253,7 +253,8 @@ module ActionDispatch::Routing
           raise unless e.message.include?("undefined method `devise'")
           raise_no_devise_method_error!(mapping.class_name)
         end
-
+        puts "Resource: #{resource}"
+        puts "omniauth_callbacks: #{options[:controllers][:omniauth_callbacks]}"
         if options[:controllers] && options[:controllers][:omniauth_callbacks]
           unless mapping.omniauthable?
             raise ArgumentError, "Mapping omniauth_callbacks on a resource that is not omniauthable\n" \
